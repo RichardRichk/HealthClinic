@@ -22,7 +22,7 @@ namespace webapi_HealthClinic.Domains
         public Guid IdUsuario { get; set; }
 
         [ForeignKey(nameof(IdUsuario))]
-        public Usuario Usuario { get; set; }
+        public Usuario? Usuario { get; set; }
 
 
 
@@ -30,7 +30,7 @@ namespace webapi_HealthClinic.Domains
         public Guid IdClinica { get; set; }
 
         [ForeignKey(nameof(IdClinica))]
-        public Clinica Clinica { get; set; }
+        public Clinica? Clinica { get; set; }
 
 
 
@@ -38,7 +38,7 @@ namespace webapi_HealthClinic.Domains
         public Guid IdEspecialidade { get; set; }
 
         [ForeignKey(nameof(IdEspecialidade))]
-        public Especialidades Especialidade { get; set; }
+        public Especialidades? Especialidade { get; set; }
 
 
     }

@@ -14,6 +14,11 @@ namespace webapi_HealthClinic.Domains
         [Column(TypeName = ("VARCHAR(120)"))]
         public string? Comentario { get; set; }
 
+
+        [Column(TypeName = ("BIT"))]
+        public bool? Exibe { get; set; }
+
+
         //Foreign key
 
         [Required(ErrorMessage ="o id do paciente e obrigatorio!")]
@@ -21,7 +26,7 @@ namespace webapi_HealthClinic.Domains
 
 
         [ForeignKey(nameof(IdPaciente))]
-        public Paciente Paciente { get; set; }
+        public Paciente? Paciente { get; set; }
 
     }
 }

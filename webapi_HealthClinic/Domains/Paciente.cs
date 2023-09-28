@@ -26,7 +26,7 @@ namespace webapi_HealthClinic.Domains
 
         [Column(TypeName = ("DATE"))]
         [Required(ErrorMessage ="Data de nascimento e obrigatoria!")]
-        public DateOnly DataNascimento { get; set; }
+        public DateTime DataNascimento { get; set; }
 
 
         [Column(TypeName = ("VARCHAR(30)"))]

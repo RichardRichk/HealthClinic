@@ -23,22 +23,22 @@ namespace webapi_HealthClinic.Domains
         public string? Endereco { get; set; }
 
 
-        [Column(TypeName = ("DATE"))]
+        [Column(TypeName = ("TIME"))]
         [Required(ErrorMessage ="o horario de abertura e obrigatorio!")]
-        public DateTime HorarioAbertura { get; set; }
+        public TimeSpan? HorarioAbertura { get; set; }
 
 
-        [Column(TypeName =("DATE"))]
+        [Column(TypeName =("TIME"))]
         [Required(ErrorMessage ="O horario de fechamento e obrigatorio!")]
-        public DateTime HorarioFechamento { get; set; }
+        public TimeSpan? HorarioFechamento { get; set; }
 
 
-        [Column(TypeName = ("CHAR(60"))]
+        [Column(TypeName = ("CHAR(60)"))]
         [Required(ErrorMessage = "O CNPJ e obrigatorio!")]
         public string? CNPJ { get; set; }
 
 
-        [Column(TypeName =("VARCHAR(100"))]
+        [Column(TypeName =("VARCHAR(100)"))]
         [Required(ErrorMessage ="A razao social e obrigatoria!")]
         public string? RazaoSocial { get; set; }
 
