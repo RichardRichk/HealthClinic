@@ -17,7 +17,11 @@ namespace webapi_HealthClinic.Repositoryes
         {
             Usuario usuarioBuscado = _healthContext.Usuario.Find(id)!;
 
-            return (usuarioBuscado);
+            if (usuarioBuscado != null)
+            {
+                return (usuarioBuscado);
+            }
+            return null!;
         }
 
         public void Atualizar(Guid id, Usuario usuario)
@@ -28,6 +32,7 @@ namespace webapi_HealthClinic.Repositoryes
         public void Cadastrar(Usuario usuario)
         {
             usuario.Id = Guid.NewGuid();
+
 
 
         }
