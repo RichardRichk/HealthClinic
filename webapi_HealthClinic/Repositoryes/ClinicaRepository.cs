@@ -17,29 +17,78 @@ namespace webapi_HealthClinic.Repositoryes
 
         public void Atualizar(Guid id, Clinica clinica)
         {
-            throw new NotImplementedException();
+            Clinica clinicaBuscada = _healthContext.Clinica.FirstOrDefault(c => c.Id == id);
+
+            if (clinicaBuscada != null)
+            {
+                clinicaBuscada.Nome = clinica.Nome;
+
+                clinicaBuscada.RazaoSocial = clinica.RazaoSocial;
+
+                clinicaBuscada.CNPJ = clinica.CNPJ;
+
+                clinicaBuscada.HorarioAbertura = clinica.HorarioAbertura;
+
+                clinicaBuscada.HorarioFechamento = clinica.HorarioFechamento;
+
+                clinicaBuscada.Endereco = clinica.Endereco;
+
+                _healthContext.Update(clinicaBuscada);
+
+                _healthContext.SaveChanges();
+            }
+
+
         }
 
         public Clinica BuscarPorId(Guid id)
         {
-            throw new NotImplementedException();
+            Clinica clinicaBuscasda = _healthContext.Clinica.FirstOrDefault(c => c.Id == id);
+
+            if (clinicaBuscasda != null)
+            {
+                return (clinicaBuscasda);
+
+            }
+            return null!;
+
         }
 
         public void Cadastrar(Clinica clinica)
         {
             clinica.Id = Guid.NewGuid();
 
+            _healthContext.Add(clinica);
+
+            _healthContext.SaveChanges();
             
         }
 
         public void Deletar(Guid id)
         {
-            throw new NotImplementedException();
+
+            try
+            {
+                Clinica clinicaDelete = _healthContext.Clinica.Find(id);
+
+                if (clinicaDelete != null)
+                {
+                    _healthContext.Remove(clinicaDelete);
+
+                    _healthContext.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
 
         public List<Clinica> Listar()
         {
-            throw new NotImplementedException();
+            return _healthContext.Clinica.ToList();
         }
     }
 }

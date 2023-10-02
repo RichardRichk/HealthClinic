@@ -14,6 +14,9 @@ namespace webapi_HealthClinic.Domains
         public Guid Id { get; set; }
 
 
+        [Column(TypeName =())]
+
+
         [Column(TypeName =("VARCHAR(100)"))]
         [Required(ErrorMessage ="O RG e obrigatorio!")]
         public string? RG { get; set; }

@@ -1,4 +1,5 @@
-﻿using webapi_HealthClinic.Contexts;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using webapi_HealthClinic.Contexts;
 using webapi_HealthClinic.Domains;
 using webapi_HealthClinic.Interfaces;
 
@@ -17,9 +18,15 @@ namespace webapi_HealthClinic.Repositoryes
 
         public TiposUsuario BuscarPorId(Guid id)
         {
-            TiposUsuario tipoUsuarioBuscado = _healthContext.TiposUsuario.Find(id);
+            TiposUsuario tipoUsuarioBuscado = _healthContext.TiposUsuario.FirstOrDefault(x => x.Id == id);
 
-            return (tipoUsuarioBuscado);
+            if (tipoUsuarioBuscado != null)
+            {
+                return (tipoUsuarioBuscado);
+            }
+
+            return null!;
+
         }
 
         public void Cadastrar(TiposUsuario tipoUsuario)
