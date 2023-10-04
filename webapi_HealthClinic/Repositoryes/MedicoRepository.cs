@@ -1,4 +1,5 @@
-﻿using webapi_HealthClinic.Contexts;
+﻿using Microsoft.EntityFrameworkCore;
+using webapi_HealthClinic.Contexts;
 using webapi_HealthClinic.Domains;
 using webapi_HealthClinic.Interfaces;
 
@@ -14,31 +15,63 @@ namespace webapi_HealthClinic.Repositoryes
             _healthContext = new HealthContext();
         }
 
-        public void Atualizar(Guid id, Medico medico)
+        public Medico BuscarPorId(Guid id)
         {
-            Medico medicoBuscado = _healthContext.Medico.FirstOrDefault(m => m.Id == id);
-
-            if (medicoBuscado != null)
+            try
             {
-                medicoBuscado.CRM = medico.CRM;
+                Medico search = _healthContext.Medico
+               .Select(x => new Medico
+               {
+                   Id = x.Id,
+                   CRM = x.CRM,
 
-                medicoBuscado.Clinica = medico.Clinica;
+                   Usuario = new Usuario
+                   {
+                       Nome = x.Usuario!.Nome
 
-                medicoBuscado.Especialidade = medico.Especialidade;
+                   },
+
+                   Clinica = new Clinica
+                   {
+                       Nome = x.Clinica!.Nome,
+                       Endereco = x.Clinica!.Endereco
+                   },
+
+                   Especialidade = new Especialidades
+                   {
+                       Especialidade = x.Especialidade!.Especialidade,
+                   }
+
+
+
+               }).FirstOrDefault(x => x.Id == id)!;
+
+                if (search != null)
+                {
+                    return search;
+                }
+                return null!;
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
 
-        public Medico BuscarPorId(Guid id)
+        public void Atualizar(Guid id, Medico medico)
         {
-            Medico medicoBuscasdo = _healthContext.Medico.FirstOrDefault(c => c.Id == id)!;
+            Medico bus = _healthContext.Medico.FirstOrDefault(x => x.Id == id)!;
 
-            if (medicoBuscasdo != null)
-            {
-                return (medicoBuscasdo);
+            bus.CRM = medico.CRM;
+            bus.Usuario!.Nome = medico.Usuario!.Nome;
+            bus.Clinica!.Nome = medico.Clinica!.Nome;
+            bus.Clinica!.Endereco = medico.Clinica!.Endereco;
+            bus.Especialidade!.Especialidade = medico.Especialidade!.Especialidade;
 
-            }
-            return null!;
 
+            _healthContext.Update(bus);
+            _healthContext.SaveChanges();
         }
 
         public void Cadastrar(Medico medico)
@@ -77,3 +110,4 @@ namespace webapi_HealthClinic.Repositoryes
             return _healthContext.Medico.ToList();
         }
     }
+}

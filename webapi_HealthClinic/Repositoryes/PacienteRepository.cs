@@ -16,36 +16,52 @@ namespace webapi_HealthClinic.Repositoryes
 
         public void Atualizar(Guid id, Paciente paciente)
         {
-            Paciente pacienteAtualizado = _healthContext.Paciente.FirstOrDefault(x => x.Id == id);
+            Paciente pacienteBuscado = _healthContext.Paciente.FirstOrDefault(x => x.Id == id)!;
 
-            if (pacienteAtualizado != null)
-            {
+            pacienteBuscado.RG = paciente.RG;
+            pacienteBuscado.Usuario!.Nome = paciente.Usuario!.Nome;
+            pacienteBuscado.CPF = paciente.CPF;
+            pacienteBuscado.DataNascimento = paciente.DataNascimento;
+            pacienteBuscado.Telefone = paciente.Telefone;
+            pacienteBuscado.Endereco = paciente.Endereco;
 
-                pacienteAtualizado.RG = paciente.RG;
 
-                pacienteAtualizado.Telefone = paciente.Telefone;
-
-                pacienteAtualizado.CPF = paciente.CPF;
-
-                pacienteAtualizado.Endereco = paciente.Endereco;
-
-                _healthContext.Update(pacienteAtualizado);
-
-                _healthContext.SaveChanges();
-            }
+            _healthContext.Update(pacienteBuscado);
+            _healthContext.SaveChanges();
         }
 
         public Paciente BuscarPorId(Guid id)
         {
-            Paciente pacienteBuscasdo = _healthContext.Paciente.FirstOrDefault(c => c.Id == id);
-
-            if (pacienteBuscasdo != null)
+            try
             {
-                return (pacienteBuscasdo);
+                Paciente search = _healthContext.Paciente
+               .Select(x => new Paciente
+               {
+                   Id = x.Id,
+                   RG = x.RG,
+                   CPF = x.CPF,
+                   DataNascimento = x.DataNascimento,
+                   Telefone = x.Telefone,
 
+                   Usuario = new Usuario
+                   {
+                       Nome = x.Usuario!.Nome
+
+                   }
+
+               }).FirstOrDefault(x => x.Id == id)!;
+
+                if (search != null)
+                {
+                    return search;
+                }
+                return null!;
             }
-            return null!;
+            catch (Exception)
+            {
 
+                throw;
+            }
         }
 
         public void Cadastrar(Paciente paciente)

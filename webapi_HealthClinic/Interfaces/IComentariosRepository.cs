@@ -14,7 +14,7 @@ namespace webapi_HealthClinic.Interfaces
         void Atualizar(Guid id, Comentarios comentario);
 
 
-        List<Comentarios> Listar();
+        List<Comentarios> ListarPorPaciente();
 
 
         Comentarios BuscarPorId(Guid id);

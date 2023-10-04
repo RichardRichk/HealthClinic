@@ -14,6 +14,11 @@ namespace webapi_HealthClinic.Repositoryes
             _healthContext = new HealthContext();
         }
 
+        public void Atualizar(Guid id, Usuario usuario)
+        {
+            throw new NotImplementedException();
+        }
+
         public Usuario BuscarPorId(Guid id)
         {
             Usuario usuarioBuscado = _healthContext.Usuario.Find(id)!;
@@ -25,22 +30,32 @@ namespace webapi_HealthClinic.Repositoryes
             return null!;
         }
 
-        public void Atualizar(Guid id, Usuario usuario)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Cadastrar(Usuario usuario)
         {
-            usuario.Id = Guid.NewGuid();
+            try
+            {
+                usuario.Senha = Criptografia.GerarHash(usuario.Senha);
+
+                _healthContext.Usuario.Add(usuario);
+                
 
 
-
+                _healthContext.SaveChanges();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public void Deletar(Guid id)
         {
-            throw new NotImplementedException();
+            Usuario usuarioBuscado = _healthContext.Usuario.Find(id);
+
+            _healthContext.Usuario.Remove(usuarioBuscado);
+
+            _healthContext.SaveChanges();
+
         }
 
         public Usuario Login(string email, string senha)

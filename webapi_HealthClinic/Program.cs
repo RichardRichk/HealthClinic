@@ -39,9 +39,9 @@ namespace webapi_HealthClinic
 
                         ClockSkew = TimeSpan.FromMinutes(8),
 
-                        ValidIssuer = "HealthClinic_Manha"
+                        ValidIssuer = "HealthClinic_Manha",
 
-                        ValidAudience = "HealthClinic_Manha"
+                        ValidAudience = "HealthClinic_Manha",
 
                     };
 
