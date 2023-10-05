@@ -31,14 +31,38 @@ namespace webapi_HealthClinic.Repositoryes
 
         public Comentarios BuscarPorId(Guid id)
         {
-            Comentarios comentarioBuscasdo = _healthContext.Comentarios.FirstOrDefault(c => c.Id == id);
-
-            if (comentarioBuscasdo != null)
+            try
             {
-                return (comentarioBuscasdo);
+                Comentarios search = _healthContext.Comentarios
+               .Select(x => new Comentarios
+               {
+                   Id = x.Id,
+                   Comentario = x.Comentario,
+                   Exibe = x.Exibe,
 
+                   Paciente = new Paciente
+                   {
+                       Usuario = new Usuario
+                       {
+                           Nome = x.Paciente.Usuario.Nome,
+                       }
+                   }
+
+
+
+               }).FirstOrDefault(x => x.Id == id)!;
+
+                if (search != null)
+                {
+                    return search;
+                }
+                return null!;
             }
-            return null!;
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public void Cadastrar(Comentarios comentario)
@@ -72,7 +96,7 @@ namespace webapi_HealthClinic.Repositoryes
 
         public List<Comentarios> ListarPorPaciente()
         {
-            return _healthContext.Comentarios.ToList();
+                return _healthContext.Comentarios.ToList();
         }
     }
 }

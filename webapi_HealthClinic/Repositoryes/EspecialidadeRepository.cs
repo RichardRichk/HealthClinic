@@ -15,6 +15,20 @@ namespace webapi_HealthClinic.Repositoryes
             _healthContext = new HealthContext();
         }
 
+        public void Atualizar(Guid id, Especialidades especialidade)
+        {
+            Especialidades especialidadeBuscada = _healthContext.Especialidades.FirstOrDefault(c => c.Id == id);
+
+            if (especialidadeBuscada != null)
+            {
+                especialidadeBuscada.Especialidade = especialidade.Especialidade;
+
+                _healthContext.Update(especialidadeBuscada);
+
+                _healthContext.SaveChanges();
+            }
+        }
+
         public Especialidades BuscarPorId(Guid id)
         {
             Especialidades tipoUsuarioBuscado = _healthContext.Especialidades.Find(id);

@@ -16,7 +16,18 @@ namespace webapi_HealthClinic.Repositoryes
 
         public void Atualizar(Guid id, Usuario usuario)
         {
-            throw new NotImplementedException();
+            Usuario usuarioBuscado = _healthContext.Usuario.FirstOrDefault(c => c.Id == id);
+
+            if (usuarioBuscado != null)
+            {
+                usuarioBuscado.Nome = usuario.Nome;
+
+                usuarioBuscado.IdTipoUsuario = usuario.IdTipoUsuario;
+
+                _healthContext.Update(usuarioBuscado);
+
+                _healthContext.SaveChanges();
+            }
         }
 
         public Usuario BuscarPorId(Guid id)

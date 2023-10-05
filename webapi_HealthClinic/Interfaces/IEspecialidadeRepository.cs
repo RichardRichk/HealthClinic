@@ -9,6 +9,10 @@ namespace webapi_HealthClinic.Interfaces
 
         void Deletar(Guid id);
 
+
+        void Atualizar(Guid id, Especialidades especialidade);
+
+
         List<Especialidades> Listar();
 
 
