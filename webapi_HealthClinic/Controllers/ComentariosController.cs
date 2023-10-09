@@ -57,7 +57,7 @@ namespace webapi_HealthClinic.Controllers
             {
                 _comentariosRepository.Cadastrar(comentarios);
 
-                return StatusCode(201);
+                return Ok();
             }
             catch (Exception e)
             {
